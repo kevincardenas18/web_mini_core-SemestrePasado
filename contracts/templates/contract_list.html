@@ -1,0 +1,40 @@
+{% extends "base_layout.html" %} 
+
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block content %}
+  <h1 class="mb-5">Contratos</h1>
+
+  {% if contracts %}
+    <div class="border border-muted px-3 py-2 rounded">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Cliente</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Costo</th>
+            <th scope="col">Fecha de creación</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for contract in contracts %}
+          <tr>
+            <td>{{ contract.client.name }}</td>
+            <td>{{ contract.description }}</td>
+            <td>{{ contract.price|floatformat:2|intcomma }}</td>
+            <td>{{ contract.creation_date|date:"d/m/Y" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-end pt-2 text-muted">
+      <span>Resultados: {{ contracts|length }}</span>
+    </div>
+  {% else %}
+    <div class="alert alert-info" role="alert">
+      No se encontraron resultados
+    </div>
+  {% endif %}
+{% endblock %}
